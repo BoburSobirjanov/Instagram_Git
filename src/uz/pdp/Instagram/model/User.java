@@ -22,7 +22,7 @@ private String Bio;
         this.fullName = fullName;
     }
 
-    public User() {
+    public User(String mittime, String mittivine, String s) {
     }
 
     public String getUsername() {
