@@ -6,9 +6,12 @@ import uz.pdp.Instagram.service.postservice.PostService;
 import uz.pdp.Instagram.service.postservice.PostServiceImpl;
 import uz.pdp.Instagram.service.userservice.UserService;
 import uz.pdp.Instagram.service.userservice.UserServiceImpl;
+
+import java.util.Random;
 import java.util.Scanner;
 import java.util.UUID;
 public class Main {
+    static Random random= new Random();
     static UserService userService = new UserServiceImpl();
     static PostService postService = new PostServiceImpl();
     static FollowersService followersService = new FollowersServiceImpl();
@@ -70,23 +73,55 @@ public class Main {
 
 
     private static void phoneUp() {
-        System.out.print("Enter your phone number: ");
-        String  phoneNumber=scanInt.nextLine();
-        System.out.print("Enter your username: ");
-        String username=scanStr.nextLine();
-        System.out.print("Enter your password: ");
-        String password=scanInt.nextLine();
-        userService.add(new User(username,password,phoneNumber));
-
+        System.out.print("Enter username: ");
+        String username = scanStr.nextLine();
+        for (User user1: UserRepository.users) {
+        if (user1.getUsername().equals(username)){
+            System.out.println("\nThis username has already used ❌\n");
+            return;
+        }
+        else {
+        System.out.print("Enter phone number: (+998) ");
+        String phoneNumber = scanStr.nextLine();
+        if (phoneNumber.length()==9){
+            while (true){
+                int randomNum = random.nextInt(1000,9999);
+                System.out.println("Your SMS code: " + randomNum);
+                System.out.print("Enter SMS code: ");
+                int smscode= scanInt.nextInt();
+                if (smscode==randomNum){
+                    System.out.println("SMS ✅");
+                    break;
+                }
+                else {
+                    System.out.println("Incorrect SMS code ❌");
+                }
+            }
+            System.out.print("Enter your own password: ");
+            String password= scanStr.nextLine();
+            if (password.length()>=8){
+            User user = new User(username,phoneNumber,password);
+            userService.add(user);
+            System.out.println("Sign Up Successfully ✅");
+        } else {
+                System.out.println("Password length must be more 8 character ❗");
+            }
+        }
+        else {
+            System.out.println("Phone Number is Wrong !  Try Again !");
+        }
+      }
+        }
     }
 
     private static void gmailUp() {
         while(true){
             System.out.print("Enter your gmail:  ");
             String gmail=scanStr.nextLine();
-            if (gmail.endsWith("@gmail.com")){System.out.print("Enter your username:  ");
+            if (gmail.endsWith("@gmail.com")){
+                System.out.print("Enter your username:  ");
                 String username=scanStr.nextLine();
-                User user =new User (username);
+                for (User user: UserRepository.users) {
                     if (user.getUsername().equals(username)){
                         System.out.println("\nThis username has already used ❌\n");
                         return;
@@ -94,12 +129,14 @@ public class Main {
                         System.out.print("Create a password:  ");
                         String password=scanStr.nextLine();
                         if (password.length()>8){
-                            userService.add(new User(username,password,gmail)); }
+                            userService.add(new User(username,password,gmail));
+                            System.out.println("Sign Up Successfully ✅");
+                        }
                         else {
-                            System.out.println("Password length must be more 8 character !");
+                            System.out.println("Password length must be more 8 character ❗");
                             return;
                         }
-                    }  }
+                    } } }
             else {
                 System.out.println("\nWrong something. Try Again ❌\n" );
             }
@@ -108,5 +145,5 @@ public class Main {
         userService.add(new User("dilime","dli1999"));
         userService.add(new User("mittime","mittivine"));
         userService.add(new User("cristiano","cr7family"));
-    }
-}
+            }
+        }
