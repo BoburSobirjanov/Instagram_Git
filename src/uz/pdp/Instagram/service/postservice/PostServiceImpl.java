@@ -9,21 +9,39 @@ public class PostServiceImpl implements PostService, PostRepository {
 
     @Override
     public int add(Post model) {
-        return 0;
+        posts.add(model);
+        return 1;
     }
 
     @Override
     public Post getById(UUID id) {
+        for (Post post:posts) {
+            if(post.getId().equals(id)){
+                return post;
+            }
+        }
         return null;
     }
 
     @Override
     public int edit(Post update) {
-        return 0;
+        for (int i = 0; i < posts.size(); i++) {
+            if(posts.get(i).getId().equals(update.getId())){
+
+                return 1;
+           }
+
+        }
+        return -1;
     }
 
     @Override
     public int deleteById(UUID Id) {
-        return 0;
+        for (Post post:posts) {
+            if(post.getId().equals(Id)){
+                return 1;
+            }
+        }
+        return -1;
     }
 }
