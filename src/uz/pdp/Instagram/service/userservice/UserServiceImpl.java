@@ -41,4 +41,13 @@ public class UserServiceImpl implements UserService, UserRepository {
         }
         return -1;
     }
+    @Override
+    public User signIn(String username, String password) {
+        for (User user: users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)){
+                return user;
+            }
+        }
+        return null;
+    }
 }

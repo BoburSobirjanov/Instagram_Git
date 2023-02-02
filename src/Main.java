@@ -6,23 +6,19 @@ import uz.pdp.Instagram.service.postservice.PostService;
 import uz.pdp.Instagram.service.postservice.PostServiceImpl;
 import uz.pdp.Instagram.service.userservice.UserService;
 import uz.pdp.Instagram.service.userservice.UserServiceImpl;
-
 import java.util.Scanner;
 import java.util.UUID;
-
 public class Main {
     static UserService userService = new UserServiceImpl();
     static PostService postService = new PostServiceImpl();
     static FollowersService followersService = new FollowersServiceImpl();
-
     static Scanner scanInt = new Scanner(System.in);
     static Scanner scanStr = new Scanner(System.in);
-
     public static void main(String[] args) {
         defaultD();
-        System.out.println("1-Sign up\t2-Sign In\t\t0.Exit");
+        while (true){
+        System.out.println("1-Sign up\t\t2-Sign In\t\t0.Exit");
         int act = scanInt.nextInt();
-        while (true) {
             switch (act) {
                 case 1 -> {
                     signUp();
@@ -36,23 +32,17 @@ public class Main {
             }
         }
     }
-
     private static void signIn() {
         System.out.print("Enter username: ");
         String username = scanStr.nextLine();
         System.out.print("Enter password: ");
         String password = scanStr.nextLine();
-        for (int i = 0; i < UserRepository.users.size(); i++) {
-            if (password.equals(UserRepository.users.get(i).getPassword()) &&
-                    username.equals(UserRepository.users.get(i).getUsername())){
-                userMenu();
-                break;
-            }
+        User user = userService.signIn(username,password);
+            if (user!=null && user.getUsername().equals(username) && user.getPassword().equals(password)){
+                userMenu();    }
             else {
-                System.out.println("We did not find this user ❌");
-                break;
+                System.out.println("\nWe did not find this user ❌\n");
             }
-        }
     }
 
     private static void userMenu() {
@@ -61,19 +51,22 @@ public class Main {
     }
 
     private static void signUp() {
+        while (true){
         System.out.println("Choose the type of signing up:");
         System.out.println("1-With Gmail\t\t2-With Phone number\t\t0-Back");
-        int act1 = scanInt.nextInt();
-        while (true){
-            switch (act1) {
-                case 1 -> gmailUp();
-                case 2 -> phoneUp();
+            switch (scanInt.nextInt()) {
+                case 1 -> {
+                    gmailUp();
+                }
+                case 2 -> {
+                    phoneUp();
+                }
                 case 0 -> {
                     return;
                 }
             }
         }
-    }
+      }
 
 
     private static void phoneUp() {
@@ -93,9 +86,9 @@ public class Main {
             String gmail=scanStr.nextLine();
             if (gmail.endsWith("@gmail.com")){System.out.print("Enter your username:  ");
                 String username=scanStr.nextLine();
-                for (int i = 0; i < UserRepository.users.size(); i++) {
-                    if (UserRepository.users.get(i).getUsername().equals(username)){
-                        System.out.println("This username has already used ❌");
+                User user =new User (username);
+                    if (user.getUsername().equals(username)){
+                        System.out.println("\nThis username has already used ❌\n");
                         return;
                     } else {
                         System.out.print("Create a password:  ");
@@ -106,14 +99,14 @@ public class Main {
                             System.out.println("Password length must be more 8 character !");
                             return;
                         }
-                    } } }
+                    }  }
             else {
-                System.out.println("Wrong something. Try Again ❌" );
+                System.out.println("\nWrong something. Try Again ❌\n" );
             }
         }}
     public static void defaultD(){
-        userService.add(new User("dilime","dli1999","880007799"));
-        userService.add(new User("mittime","mittivine","880007799"));
-        userService.add(new User("cristiano","cr7family","880007799"));
+        userService.add(new User("dilime","dli1999"));
+        userService.add(new User("mittime","mittivine"));
+        userService.add(new User("cristiano","cr7family"));
     }
 }

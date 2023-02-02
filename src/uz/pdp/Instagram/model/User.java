@@ -4,8 +4,45 @@ public class User extends BaseModel {
     private String username;
     private String password;
     private String phoneNumber;
-private String fullName;
-private String Bio;
+    private String fullName;
+    private String Bio;
+    private int follower;
+    private int following;
+
+    public int getFollower() {
+        return follower;
+    }
+
+    public void setFollower(int follower) {
+        this.follower = follower;
+    }
+
+    public int getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(int following) {
+        this.following = following;
+    }
+
+    public User(String username, String password, String phoneNumber, String fullName, String bio, int follower, int following) {
+        this.username = username;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.fullName = fullName;
+        Bio = bio;
+        this.follower = follower;
+        this.following = following;
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public User(String username, String password, String phoneNumber, String fullName, String bio) {
         this.username = username;

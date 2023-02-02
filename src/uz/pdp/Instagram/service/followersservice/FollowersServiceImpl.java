@@ -1,6 +1,7 @@
 package uz.pdp.Instagram.service.followersservice;
 
 import uz.pdp.Instagram.model.Followers;
+import uz.pdp.Instagram.model.User;
 import uz.pdp.Instagram.repository.FollowersRepository;
 
 import java.util.UUID;
@@ -24,5 +25,10 @@ public class FollowersServiceImpl implements FollowersService, FollowersReposito
     @Override
     public int deleteById(UUID Id) {
         return 0;
+    }
+
+    @Override
+    public User signIn(String username, String password) {
+        return null;
     }
 }
