@@ -2,14 +2,14 @@ package uz.pdp.Instagram.model;
 
 import java.util.UUID;
 
-public class BaseModel {
-   private Long Id;
+public abstract class BaseModel {
+   private UUID id;
 
-    public Long getId() {
-        return Id;
+    public UUID getId() {
+        return id;
     }
 
-    public void setId(Long id) {
-        Id = id;
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

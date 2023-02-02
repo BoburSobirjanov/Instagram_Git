@@ -1,5 +1,9 @@
 package uz.pdp.Instagram.service.userservice;
 
-public interface UserService {
+import uz.pdp.Instagram.model.User;
+import uz.pdp.Instagram.service.BaseService;
+
+public interface UserService extends BaseService<User> {
+
 
 }
