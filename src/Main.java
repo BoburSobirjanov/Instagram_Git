@@ -50,7 +50,6 @@ public class Main {
 
     private static void userMenu() {
         System.out.println("Hello");
-
     }
 
     private static void signUp() {
