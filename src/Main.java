@@ -40,14 +40,63 @@ public class Main {
         String username = scanStr.nextLine();
         System.out.print("Enter password: ");
         String password = scanStr.nextLine();
-        User user = userService.signIn(username,password);
-            if (user!=null && user.getUsername().equals(username) && user.getPassword().equals(password)){
-                userMenu();    }
-            else {
-                System.out.println("\nWe did not find this user ❌\n");
+        User user = userService.signIn(username, password);
+        if (user != null && user.getUsername().equals(username) && user.getPassword().equals(password)) {
+            userMenu();  }
+        else if (user != null && user.getUsername().equals(username) && !user.getPassword().equals(password)) {
+            while (true) {
+                System.out.println("\nIncorrect password\n");
+                System.out.println("\n1.Reset password\t\t0.Back\n");
+                switch (scanInt.nextInt()) {
+                    case 1 -> {
+                        resetPassword();
+                    }
+                    case 0 -> {
+                        return;
+                    }
+                    default -> {
+                        System.out.println("Wrong Command ❌");
+                    }
+                }
             }
+        } else{
+            System.out.println("\nWe did not find this user ❌\n");
+             }
     }
 
+    private static void resetPassword() {
+        System.out.print("Enter phone number(+998): ");
+        String phoneNumber = scanStr.nextLine();
+        if (phoneNumber.length()==9){
+            while (true){
+                int randomNum = random.nextInt(1000,9999);
+                String smsReset = "G_tmn " + randomNum + "fBki";
+                System.out.println("Your SMS code: " +smsReset);
+                System.out.print("Enter SMS code: ");
+                String smscode= scanStr.nextLine();
+                if (smscode.equals(smsReset)){
+                    System.out.println("SMS ✅");
+                    break;
+                }
+                else {
+                    System.out.println("Incorrect SMS code ❌");
+                }
+            }
+            System.out.print("Enter new password: ");
+            String password= scanStr.nextLine();
+            if (password.length()>=8){
+                User user = new User(phoneNumber,password);
+                user.setPassword(password);
+                userService.add(user);
+                userMenu();
+            } else {
+                System.out.println("Password length must be more 8 character ❗");
+            }
+        }
+        else {
+            System.out.println("Phone Number is Wrong !  Try Again !");
+        }
+    }
     private static void userMenu() {
         System.out.println("Hello");
     }
@@ -142,7 +191,7 @@ public class Main {
         }
     }
     public static void defaultD(){
-        userService.add(new User("hgghghjh","dli1999"));
+        userService.add(new User("dilime","dli1999"));
         userService.add(new User("mittime","mittivine"));
         userService.add(new User("cristiano","cr7family"));
             }
