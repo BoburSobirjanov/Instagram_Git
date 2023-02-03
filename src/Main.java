@@ -140,7 +140,8 @@ public class Main {
             else {
                 System.out.println("\nWrong something. Try Again ❌\n" );
             }
-        }}
+        }
+    }
     public static void defaultD(){
         userService.add(new User("dilime","dli1999"));
         userService.add(new User("mittime","mittivine"));
